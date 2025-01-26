@@ -65,19 +65,19 @@ const Popup = () => {
   const metrics: Metric[] = [
     {
       label: "Information Accuracy",
-      value: 98,
+      value: 78,
     },
     {
       label: "Source Credibility",
-      value: 85,
+      value: 82,
     },
     {
       label: "Public Interest",
-      value: 70,
+      value: 93,
     },
     {
       label: "Headline Integrity",
-      value: 90,
+      value: 82,
     },
   ];
 
@@ -106,12 +106,12 @@ const Popup = () => {
               >
                 {statusText}
               </div>
-              {/* <button
+              <button
                 onClick={() => setExpandedTrust(!expandedTrust)}
                 className="text-zinc-400 hover:text-zinc-300 text-[12px] underline"
               >
                 {expandedTrust ? "Minimize" : "Why?"}
-              </button> */}
+              </button>
             </div>
           </div>
           {expandedTrust && (

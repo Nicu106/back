@@ -6,19 +6,19 @@ const placeholderData = {
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce convallis neque lacus, id facilisis est auctor et. Cras tempus non tortor dignissim elementum. Donec ut tempor lacus. ",
   relatedArticles: [
     {
-      url: "https://www.example.com",
-      title: "Example Article",
+      url: "https://diez.md",
+      title: "Donald Trump Address to Joint Session of Congress... ",
     },
     {
-      url: "https://www.example.com",
-      title: "Example Article",
+      url: "https://diez.md",
+      title: "Donald Trump Address to Joint Session of Congress... ",
     },
     {
-      url: "https://www.example.com",
-      title: "Example Article",
+      url: "https://diez.md",
+      title: "Donald Trump Address to Joint Session of Congress... ",
     },
   ],
-  status: "good",
+  status: "unreliable",
 };
 
 const ENDPOINT = "http://127.0.0.1:8000/analyze_all/"; // Added trailing slash to match curl
@@ -27,25 +27,33 @@ const API_KEY = "1fd10517d980ad53ff74945bccb29da0";
 // Function to make the fetch request
 async function fetchData(url: string) {
   try {
-
     console.log("Fetching data for URL:", url);
     // Replace with your actual API endpoint
     const response = await fetch(ENDPOINT, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-TRUS-API-Key": API_KEY
+        "X-TRUS-API-Key": API_KEY,
       },
       body: JSON.stringify({ contentUri: url, language: "eng" }),
     });
     const data = await response.json();
-    const trustLevel = data['trust-level'];
+    const trustLevel = data["trust-level"];
     const summary = data.summary.summary;
+
+    const graph =
+      data.graph.length > 0 ? data.graph : placeholderData.relatedArticles;
     currentData = {
       summary: summary,
-      relatedArticles: data.graph,
-      status: trustLevel['trust-level'] <= "50" ? "bad" : trustLevel['trust-level'] > "50" && trustLevel['trust-level'] <= "85" ? "unreliable" : "good",
-    }
+      relatedArticles: graph,
+      status:
+        Number(trustLevel["trustLevel"]) <= 50
+          ? "bad"
+          : Number(trustLevel["trustLevel"]) > 50 &&
+            Number(trustLevel["trustLevel"]) <= 85
+          ? "unreliable"
+          : "good",
+    };
 
     console.log("data", data);
     console.log("Data fetched:", currentData);
