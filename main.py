@@ -155,17 +155,12 @@ async def analyze_all(request: RequestModel):
                         for article in node.get("articleGraphNodes", [])
                     ]
                 elif key == "trust-level":
-                    # Extract and process trustLevel
+                    # Extract only "trustLevel"
                     data = response.json()
-                    trust_level = data.get("trustLevel", 0)  # Default to 0 if not present
-
-                    # Categorize trustLevel into ranges
-                    if trust_level < 25:
-                        responses[key] = {"trustLevel": 1}
-                    elif 25 <= trust_level < 90:
-                        responses[key] = {"trustLevel": 2}
-                    else:  # trust_level >= 90
-                        responses[key] = {"trustLevel": 3}
+                    responses[key] = {"trustLevel": data.get("trustLevel")}
+                else:
+                    # Return full response for "summary"
+                    responses[key] = response.json()
 
             except requests.exceptions.RequestException as e:
                 responses[key] = {"error": f"Failed to fetch {key}: {str(e)}"}
