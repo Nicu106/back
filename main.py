@@ -45,7 +45,7 @@ async def analyze_all(request: RequestModel):
 
                 # Add a size parameter for "summary" endpoint
                 if key == "summary":
-                    payload["size"] = 24
+                    payload["size"] = 15
 
                 # Make the API request
                 response = requests.post(endpoint, headers=HEADERS, data=json.dumps(payload))
