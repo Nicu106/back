@@ -1,0 +1,6 @@
+curl -X POST "http://127.0.0.1:8000/summarize/" \
+-H "Content-Type: application/json" \
+-d '{
+  "contentUri": "https://www.jurnaltv.md/news/e08f9b8e3f59fbea/jurnal-tv-isi-surprinde-telespectatorii-in-acest-an-cu-un-show-de-revelion-inedit.html",
+  "language": "eng"
+}'
